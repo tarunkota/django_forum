@@ -1,0 +1,50 @@
+Metadata-Version: 1.2
+Name: django-forum
+Version: 0.1
+Summary: A Django app to add reddit like features.
+Home-page: https://www.ias.club/
+Author: Tarun Kota
+Author-email: tarunkota@naulets.com
+License: BSD-3-Clause
+Description: =====
+        Forum
+        =====
+        
+        Forum is a Django app for adding reddit like functionality to the website. Users can post on various boards, comment and upvote.
+        
+        Detailed documentation is yet to be done.
+        
+        Quick start
+        -----------
+        
+        1. Add "forum" to your INSTALLED_APPS setting like this::
+        
+            INSTALLED_APPS = [
+                ...
+                'forum',
+            ]
+        
+        2. Include the polls URLconf in your project urls.py like this::
+        
+            path('forum/', include('forum.urls')),
+        
+        3. Run ``python manage.py migrate`` to create the forum models.
+        
+        4. Start the development server and visit http://127.0.0.1:8000/forum/
+        
+Platform: UNKNOWN
+Classifier: Environment :: Web Environment
+Classifier: Framework :: Django
+Classifier: Framework :: Django :: 3.0
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Topic :: Internet :: WWW/HTTP :: Dynamic Content
+Requires-Python: >=3.6
