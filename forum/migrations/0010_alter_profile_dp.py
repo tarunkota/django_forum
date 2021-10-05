@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('App', '0009_alter_comment_reply'),
+        ('forum', '0009_alter_comment_reply'),
     ]
 
     operations = [

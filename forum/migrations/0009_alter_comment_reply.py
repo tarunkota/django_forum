@@ -7,13 +7,13 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('App', '0008_alter_board_slug'),
+        ('forum', '0008_alter_board_slug'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='comment',
             name='reply',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='replies', to='App.comment'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='replies', to='forum.comment'),
         ),
     ]

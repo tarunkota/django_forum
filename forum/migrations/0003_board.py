@@ -8,8 +8,8 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('App', '0002_alter_profile_dp'),
+        migrations.swforumable_dependency(settings.AUTH_USER_MODEL),
+        ('forum', '0002_alter_profile_dp'),
     ]
 
     operations = [

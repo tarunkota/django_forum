@@ -8,8 +8,8 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('App', '0015_alter_comment_uid'),
+        migrations.swforumable_dependency(settings.AUTH_USER_MODEL),
+        ('forum', '0015_alter_comment_uid'),
     ]
 
     operations = [

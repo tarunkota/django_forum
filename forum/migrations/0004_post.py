@@ -9,8 +9,8 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('App', '0003_board'),
+        migrations.swforumable_dependency(settings.AUTH_USER_MODEL),
+        ('forum', '0003_board'),
     ]
 
     operations = [
@@ -31,7 +31,7 @@ class Migration(migrations.Migration):
                 ('downvotes', models.IntegerField(default=0)),
                 ('comments', models.IntegerField(default=0)),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts', to=settings.AUTH_USER_MODEL)),
-                ('board', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts', to='App.board')),
+                ('board', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='posts', to='forum.board')),
                 ('liked_by', models.ManyToManyField(blank=True, related_name='liked_posts', to=settings.AUTH_USER_MODEL)),
             ],
         ),

@@ -7,8 +7,8 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('App', '0006_auto_20210926_2044'),
+        migrations.swforumable_dependency(settings.AUTH_USER_MODEL),
+        ('forum', '0006_auto_20210926_2044'),
     ]
 
     operations = [
