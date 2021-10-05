@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                 ('dp', models.URLField(default='https://storage.googleapis.com/learnitbucket/Forum/defaults/dp.png')),
                 ('bio', models.TextField(blank=True)),
                 ('member_since', models.DateTimeField(default=django.utils.timezone.now)),
-                ('badges', models.ManyToManyField(blank=True, to='App.Badge')),
+                ('badges', models.ManyToManyField(blank=True, to='forum.Badge')),
                 ('contact_list', models.ManyToManyField(blank=True, related_name='contacters', to=settings.AUTH_USER_MODEL)),
                 ('followers', models.ManyToManyField(blank=True, default=0, related_name='following', to=settings.AUTH_USER_MODEL)),
                 ('pending_list', models.ManyToManyField(blank=True, related_name='my_pending_requests', to=settings.AUTH_USER_MODEL)),
