@@ -1,14 +1,13 @@
 from ..models import Post
 from rest_framework import serializers
 from .profile import ProfileSerializer1
+from .board import BoardSerializer
 
 class PostSerializer(serializers.ModelSerializer):
-    owner = serializers.SerializerMethodField()
+    profile = ProfileSerializer1(read_only=True,many=False)
+    board = BoardSerializer(read_only=True,many=False)
+
     class Meta:
         model = Post
-        fields = ["title","slug","owner","board","text","photo","video","score","active","created","updated","efficientMode","upvotes_count","downvotes_count","comments_count"]
+        fields = ["title","slug","profile","board","text","media","question","optionA","optionB","optionC","optionD","correctOption","solution","score","active","created","updated","efficientMode","upvotes_count","downvotes_count","comments_count","postType"]
         lookup_field = 'slug'
-
-
-    def get_owner(self,obj):
-        return ProfileSerializer1(obj.user.profile,many=False,read_only=True).data

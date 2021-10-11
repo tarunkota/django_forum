@@ -3,4 +3,7 @@ from django.apps import AppConfig
 
 class AppConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'App'
+    name = 'forum'
+
+    def ready(self):
+        from .signals import update_user_profile #noqa

@@ -1,8 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils import timezone
 from slugify import UniqueSlugify
 from ..utils import randomCharString
+from .profile import Profile
 
 class Board(models.Model):
     """Board contains posts having a similar theme.
@@ -15,10 +15,10 @@ class Board(models.Model):
     description = models.TextField(max_length=500)
 
     cover = models.ImageField(upload_to='board_covers/', blank=True)
-    admins = models.ManyToManyField(User, related_name='inspected_boards',blank=True)
+    admins = models.ManyToManyField(Profile, related_name='inspected_boards',blank=True)
 
-    subscribers = models.ManyToManyField(User, related_name='subscribed_boards',blank=True)
-    banned_users = models.ManyToManyField(User, related_name='forbidden_boards',blank=True)
+    subscribers = models.ManyToManyField(Profile, related_name='subscribed_boards',blank=True)
+    banned_users = models.ManyToManyField(Profile, related_name='forbidden_boards',blank=True)
 
     created = models.DateTimeField(default=timezone.now)
     updated = models.DateTimeField(auto_now=True)
@@ -30,7 +30,8 @@ class Board(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.slug = board_slugify(f"{self.title}")
+        if(self.slug=="" or self.slug is None):
+            self.slug = board_slugify(f"{self.title}")
         super().save(*args, **kwargs)
 
 

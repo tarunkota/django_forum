@@ -44,7 +44,7 @@ class Profile(models.Model):
 class Avatar(models.Model):
     """
     """
-    user =  models.OneToOneField(User, related_name='avatar', on_delete=models.CASCADE)
+    profile =  models.OneToOneField(Profile, null=True, related_name='avatar', on_delete=models.CASCADE)
     background = models.CharField(max_length=64,default="Circle")
     topType = models.CharField(max_length=64,default="")
     accessoriesType = models.CharField(max_length=64,default="")
@@ -60,7 +60,7 @@ class Avatar(models.Model):
     skinColor = models.CharField(max_length=64,default="")
 
     def __str__(self):
-        return str(self.user)
+        return str(self.profile)
 
     def save(self, *args, **kwargs):
         """override save
@@ -104,14 +104,4 @@ class Avatar(models.Model):
             self.skinColor = random.choice(skinColor)
 
         super(Avatar, self).save(*args, **kwargs)
-
-
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    """
-    Signals the Profile about User creation.
-    """
-    if created:
-        Profile.objects.create(user=instance)
-    instance.profile.save()
 

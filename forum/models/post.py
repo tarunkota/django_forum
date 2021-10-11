@@ -1,25 +1,50 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils import timezone
 from slugify import UniqueSlugify
 from .boards import Board
+from .profile import Profile
 
 class Post(models.Model):
     """Post
     """
 
+    QUESTION="q"
+    TEXT="t"
+    VIDEO="v"
+    IMAGE="i"
+    IMAGES="j"
+    LINK="l"
+    FILE="f"
+
+    POST_TYPE_CHOICES=(
+        (QUESTION,QUESTION),
+        (TEXT,TEXT),
+        (VIDEO,VIDEO),
+        (IMAGE,IMAGE),
+        (LINK,LINK),
+        (FILE,FILE),
+        
+        )
+
+
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=150,unique=True,null=True, blank=True)
     
-    user = models.ForeignKey(User, related_name='posts', on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, related_name='posts', on_delete=models.CASCADE)
     board = models.ForeignKey(Board, related_name='posts', on_delete=models.CASCADE)
 
     text = models.TextField(max_length=5000, blank=True, null=True)
-    photo = models.URLField(blank=True,default="")
-    video = models.URLField(blank=True,default="")
+    media = models.URLField(blank=True,default="")
+    question = models.TextField(max_length=5000,blank=True,null=True)
+    optionA = models.TextField(max_length=400,blank=True,null=True)
+    optionB = models.TextField(max_length=400,blank=True,null=True)
+    optionC = models.TextField(max_length=400,blank=True,null=True)
+    optionD = models.TextField(max_length=400,blank=True,null=True)
+    correctOption= models.CharField(max_length=1,blank=True,null=True)
+    solution = models.TextField(max_length=5000,blank=True,null=True)
 
-    upvoted_by = models.ManyToManyField(User, related_name='upvoted_posts', blank=True)
-    downvoted_by = models.ManyToManyField(User, related_name='downvoted_posts',blank=True)
+    upvoted_by = models.ManyToManyField(Profile, related_name='upvoted_posts', blank=True)
+    downvoted_by = models.ManyToManyField(Profile, related_name='downvoted_posts',blank=True)
     score = models.FloatField(default=0.0)
 
     active = models.BooleanField(default=True)
@@ -32,6 +57,11 @@ class Post(models.Model):
     downvotes_count = models.IntegerField(default=0)
     comments_count = models.IntegerField(default=0)
 
+    postType = models.CharField(max_length=1,choices=POST_TYPE_CHOICES,default=TEXT)
+    
+
+
+
     def save(self, *args, **kwargs):
         super(Post, self).save(*args, **kwargs)
         if(not self.efficientMode):
@@ -40,7 +70,8 @@ class Post(models.Model):
             self.comments_count=self.comments.count()
             super(Post, self).save(*args, **kwargs)
         #Unique slug
-        self.slug = post_slugify(f"{self.title}")
+        if(self.slug=="" or self.slug is None):
+            self.slug = post_slugify(f"{self.title}")
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -55,14 +86,16 @@ class Post(models.Model):
         self.score = post_points / pow((post_hour_age + 2), GRAVITY)
         self.save()
 
-    @staticmethod
-    def get_posts(user=None):
-        """Returns a list of posts."""
-        if user:
-            posts = Post.objects.filter(active=True, user=user)
-        else:
-            posts = Post.objects.filter(active=True)
-        return posts
+
+class SavedPost(models.Model):
+    """
+    """
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return str(self.profile)+" " +str(self.post)  
+
 
 def post_unique_check(text, uids):
     if text in uids:

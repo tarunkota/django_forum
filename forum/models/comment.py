@@ -1,11 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.utils import timezone
 from slugify import UniqueSlugify
 from .post import Post
 from django.db.models import Sum
 import uuid
-
+from .profile import Profile
 
 class Comment(models.Model):
     """A comment over a post or reply to a comment.
@@ -17,10 +16,10 @@ class Comment(models.Model):
     reply = models.ForeignKey('Comment',related_name='replies',on_delete=models.CASCADE,null=True,blank=True)    
 
     uid = models.UUIDField(default = uuid.uuid4, editable = False,unique=True)
-    user = models.ForeignKey(User,related_name='comments',on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile,related_name='comments',on_delete=models.CASCADE)
     text = models.TextField(blank=True,max_length=500)
-    upvoted_by = models.ManyToManyField(User, related_name='upvoted_comments', blank=True)
-    downvoted_by = models.ManyToManyField(User, related_name='downvoted_comments',blank=True)
+    upvoted_by = models.ManyToManyField(Profile, related_name='upvoted_comments', blank=True)
+    downvoted_by = models.ManyToManyField(Profile, related_name='downvoted_comments',blank=True)
     
     active = models.BooleanField(default=True)
     score = models.FloatField(default=0.0)

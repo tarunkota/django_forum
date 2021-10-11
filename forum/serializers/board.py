@@ -6,8 +6,8 @@ class BoardSerializer(serializers.ModelSerializer):
     admins = serializers.SerializerMethodField()
     class Meta:
         model = Board
-        fields = ["title","slug","description","cover","admins","created","updated","subscriberCount"]
+        fields = ["id","title","slug","description","cover","admins","created","updated","subscriberCount"]
         lookup_field="slug"
 
     def get_admins(self,obj):
-        return ProfileSerializer1(Profile.objects.filter(user__in=obj.admins.all()),many=True,read_only=True).data
+        return ProfileSerializer1(obj.admins.all(),many=True,read_only=True).data

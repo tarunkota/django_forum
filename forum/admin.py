@@ -10,13 +10,13 @@ admin.site.register(Profile, ProfileAdmin)
 
 
 class BoardAdmin(admin.ModelAdmin):
-    # exclude=['admins','subscribers','banned_users']
+    exclude=['subscribers','banned_users']
     pass
 admin.site.register(Board, BoardAdmin)
 
 
 class PostAdmin(admin.ModelAdmin):
-    # exclude=['user','upvoted_by','downvoted_by',]
+    exclude=['upvoted_by','downvoted_by',]
     pass
 
 admin.site.register(Post, PostAdmin)
@@ -27,3 +27,10 @@ class CommentAdmin(admin.ModelAdmin):
     pass
 
 admin.site.register(Comment, CommentAdmin)
+
+class avatarAdmin(admin.ModelAdmin):
+    exclude=['user']
+
+admin.site.register(Avatar,avatarAdmin)
+
+admin.site.register(SavedPost)
