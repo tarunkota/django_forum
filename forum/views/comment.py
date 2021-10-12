@@ -44,7 +44,7 @@ def postComments(request,slug):
 
     #order by score
     post = Post.objects.get(slug=slug)
-    comments = Comment.objects.filter(post=post).filter(reply=None).all()
+    comments = Comment.objects.filter(post=post).filter(reply=None).order_by('created')
     data = CommentSerializer(comments,many=True).data
     return JsonResponse(data,safe=False)
 
@@ -74,3 +74,47 @@ def createComment(request):
 
 
 
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def upvoteComment(request,uid):
+    """
+    """
+    comment = Comment.objects.get(uid=uid)
+    if(not comment.upvoted_by.all().filter(user = request.user).exists()):
+        comment.upvoted_by.add(request.user.profile)
+        comment.downvoted_by.remove(request.user.profile)
+        comment.save()
+    else:
+        comment.upvoted_by.remove(request.user.profile)
+        comment.save()
+    return JsonResponse({"msg":"success"})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def downvoteComment(request,uid):
+    """
+    """
+    comment = Comment.objects.get(uid=uid)
+    if(not comment.downvoted_by.all().filter(user = request.user).exists()):
+        comment.upvoted_by.remove(request.user.profile)
+        comment.downvoted_by.add(request.user.profile)
+        comment.save()
+    else:
+        comment.downvoted_by.remove(request.user.profile)
+        comment.save()
+    return JsonResponse({"msg":"success"})
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def voteboxComment(request,uid):
+    """
+    """
+    comment = Comment.objects.get(uid=uid)
+    data = {}
+    data["upvoted"] = comment.upvoted_by.filter(user=request.user).exists()
+    data["downvoted"] = comment.downvoted_by.filter(user=request.user).exists()
+
+    return JsonResponse(data)

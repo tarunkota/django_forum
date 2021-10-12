@@ -9,6 +9,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from django.http import JsonResponse,HttpResponse
+from .feed import loadPostsInCache
 
 
 
@@ -71,6 +72,7 @@ def createPost(request):
         post.correctOption = d['correctOption']
 
     post.save()
+    loadPostsInCache(post.board.slug)
     return JsonResponse({"msg":"success"})
 
 
