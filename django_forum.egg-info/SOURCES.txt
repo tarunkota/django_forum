@@ -39,6 +39,8 @@ forum/migrations/0022_auto_20211009_2003.py
 forum/migrations/0023_rename_user_comment_profile.py
 forum/migrations/0024_alter_post_posttype.py
 forum/migrations/0025_post_correctoption.py
+forum/migrations/0026_auto_20211012_0515.py
+forum/migrations/0027_alter_board_icon.py
 forum/migrations/__init__.py
 forum/models/__init__.py
 forum/models/badges.py

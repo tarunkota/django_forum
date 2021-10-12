@@ -6,7 +6,7 @@ class BoardSerializer(serializers.ModelSerializer):
     admins = serializers.SerializerMethodField()
     class Meta:
         model = Board
-        fields = ["id","title","slug","description","cover","admins","created","updated","subscriberCount"]
+        fields = ["id","title","slug","description","admins","created","updated","subscriberCount","icon"]
         lookup_field="slug"
 
     def get_admins(self,obj):

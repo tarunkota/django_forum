@@ -2,7 +2,7 @@ from ..models import Post,Board
 from ..serializers import PostSerializer
 from django.http import JsonResponse
 from rest_framework.decorators import api_view,permission_classes
-
+import traceback
 
 from django.core.cache import cache
 
@@ -29,10 +29,12 @@ def getFeed(slug):
 
 @api_view(['GET'])
 def feed(request):
-	slug = request.GET.get("board","")
-	data = getFeed(slug)
-	return JsonResponse(data,safe=False)
-
+	try:
+		slug = request.GET.get("board","")
+		data = getFeed(slug)
+		return JsonResponse(data,safe=False)
+	except Exception:
+		print(traceback.format_exc())
 
 
 @api_view(['GET'])

@@ -14,7 +14,7 @@ class Board(models.Model):
     slug = models.SlugField(max_length=100, unique=True,null=True, blank=True)
     description = models.TextField(max_length=500)
 
-    cover = models.ImageField(upload_to='board_covers/', blank=True)
+    icon = models.URLField(blank=True,default="https://storage.googleapis.com/learnitbucket/forum/uploads/emblem.jpg")
     admins = models.ManyToManyField(Profile, related_name='inspected_boards',blank=True)
 
     subscribers = models.ManyToManyField(Profile, related_name='subscribed_boards',blank=True)
