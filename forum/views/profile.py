@@ -58,4 +58,6 @@ def saveAvatar(request):
     avatar.skinColor = data['skinColor']
     avatar.save()
 
+    #reload posts of this user
+
     return JsonResponse({"msg":"success"})

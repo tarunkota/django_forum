@@ -15,6 +15,7 @@ class Post(models.Model):
     IMAGES="j"
     LINK="l"
     FILE="f"
+    POLL="p"
 
     POST_TYPE_CHOICES=(
         (QUESTION,QUESTION),
@@ -23,7 +24,7 @@ class Post(models.Model):
         (IMAGE,IMAGE),
         (LINK,LINK),
         (FILE,FILE),
-        
+        (POLL,POLL),
         )
 
 
@@ -71,11 +72,18 @@ class Post(models.Model):
             super(Post, self).save(*args, **kwargs)
         #Unique slug
         if(self.slug=="" or self.slug is None):
-            self.slug = post_slugify(f"{self.title}")
+            if(self.title!=""):
+                self.slug = post_slugify(f"{self.title}")
+            else:
+                self.slug=post_slugify(f"{self.question}")
+                
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.title
+        if self.title=="":
+            return self.title
+        else:
+            return self.question
 
     def set_score(self):
         """Calculates the rank score of a post."""

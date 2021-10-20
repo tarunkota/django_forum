@@ -58,6 +58,10 @@ def createPost(request):
         post.question = d['question']
         post.postType = Post.QUESTION
 
+    if('poll' in d):
+        post.question = d['poll']
+        post.postType = Post.POLL
+
     if('optionA' in d):
         post.optionA = d['optionA']
     if('optionB' in d):
@@ -73,6 +77,7 @@ def createPost(request):
 
     post.save()
     loadPostsInCache(post.board.slug)
+    loadPostsInCache("")
     return JsonResponse({"msg":"success"})
 
 
