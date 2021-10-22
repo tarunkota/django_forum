@@ -41,6 +41,8 @@ forum/migrations/0024_alter_post_posttype.py
 forum/migrations/0025_post_correctoption.py
 forum/migrations/0026_auto_20211012_0515.py
 forum/migrations/0027_alter_board_icon.py
+forum/migrations/0028_auto_20211020_1116.py
+forum/migrations/0029_auto_20211021_0800.py
 forum/migrations/__init__.py
 forum/models/__init__.py
 forum/models/badges.py

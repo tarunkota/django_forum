@@ -28,7 +28,7 @@ class Post(models.Model):
         )
 
 
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200,blank=True)
     slug = models.SlugField(max_length=150,unique=True,null=True, blank=True)
     
     profile = models.ForeignKey(Profile, related_name='posts', on_delete=models.CASCADE)
@@ -60,8 +60,11 @@ class Post(models.Model):
 
     postType = models.CharField(max_length=1,choices=POST_TYPE_CHOICES,default=TEXT)
     
-
-
+    pollResultOptionA = models.IntegerField(default=0)
+    pollResultOptionB = models.IntegerField(default=0)
+    pollResultOptionC = models.IntegerField(default=0)
+    pollResultOptionD = models.IntegerField(default=0)
+    
 
     def save(self, *args, **kwargs):
         super(Post, self).save(*args, **kwargs)
@@ -80,7 +83,7 @@ class Post(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        if self.title=="":
+        if self.title!="":
             return self.title
         else:
             return self.question
@@ -103,6 +106,19 @@ class SavedPost(models.Model):
     
     def __str__(self):
         return str(self.profile)+" " +str(self.post)  
+
+
+class PollResult(models.Model):
+    """
+    """
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE)
+    result = models.CharField(max_length=1,default='x')
+
+    def __str__(self):
+        return str(self.profile)+" " +str(self.post)  
+
+    
 
 
 def post_unique_check(text, uids):

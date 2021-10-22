@@ -9,5 +9,5 @@ class PostSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Post
-        fields = ["title","slug","profile","board","text","media","question","optionA","optionB","optionC","optionD","correctOption","solution","score","active","created","updated","efficientMode","upvotes_count","downvotes_count","comments_count","postType"]
+        fields = ["title","slug","profile","board","text","media","question","optionA","optionB","optionC","optionD","correctOption","solution","score","active","created","updated","efficientMode","upvotes_count","downvotes_count","comments_count","postType","pollResultOptionA","pollResultOptionB","pollResultOptionC","pollResultOptionD"]
         lookup_field = 'slug'

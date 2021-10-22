@@ -43,3 +43,10 @@ def feedReload(request):
 	for board in Board.objects.all():
 		loadPostsInCache(board.slug)
 	return JsonResponse({"msg":"success"})
+
+
+@api_view(['GET'])
+def explore(request):
+	"""
+	"""
+	

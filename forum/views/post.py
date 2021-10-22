@@ -1,5 +1,5 @@
 import json
-from ..models import Post,SavedPost,Profile,Board
+from ..models import Post,SavedPost,Profile,Board,PollResult
 from ..serializers import PostSerializer,ProfileSerializer1
 from rest_framework import generics
 from rest_framework import permissions
@@ -42,7 +42,6 @@ def createPost(request):
     """
     profile = request.user.profile
     d=json.loads(request.body)
-    print(d)
     post = Post(profile=profile,board = Board.objects.get(id = d['board']))
 
     if('title' in d):
@@ -76,6 +75,7 @@ def createPost(request):
         post.correctOption = d['correctOption']
 
     post.save()
+    print(post)
     loadPostsInCache(post.board.slug)
     loadPostsInCache("")
     return JsonResponse({"msg":"success"})
@@ -158,4 +158,18 @@ def userPosts(request,username):
     return JsonResponse(data,safe=False)
 
 
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def votePoll(request,slug):
+    """
+    """
+    post = Post.objects.get(slug=slug)
+    profile  = request.user.profile
+    pr,cc = PollResult.objects.get_or_create(profile=profile,post=post)
+    d=json.loads(request.body)
+    pr.result = d['result']
+    pr.save()
+    return JsonResponse({"msg":"success"})
 

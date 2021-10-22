@@ -21,6 +21,11 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(Post, PostAdmin)
 
+class PollResultAdmin(admin.ModelAdmin):
+    exclude=['post','profile']
+    pass
+admin.site.register(PollResult, PollResultAdmin)
+
 
 class CommentAdmin(admin.ModelAdmin):
     # exclude=['upvoted_by','downvoted_by','commenter','post','reply']

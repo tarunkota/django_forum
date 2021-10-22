@@ -29,7 +29,8 @@ urlpatterns = [
     path('api/joinBoard/<str:slug>/', joinBoard,name="joinBoard"),
     path('api/subscribedBoards/', getSubscribedBoards,name="getSubscribedBoards"),
     path('api/<str:username>/posts/',userPosts,name="userPosts"),
-
+    path('api/vote/poll/<str:slug>/', votePoll,name="votePoll"),
+    
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
