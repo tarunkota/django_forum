@@ -60,3 +60,15 @@ def getSubscribedBoards(request):
     boards = Board.objects.filter(subscribers=request.user.profile).all()
     data = BoardSerializer(boards,many=True).data
     return JsonResponse(data,safe=False)
+
+
+@api_view(['GET'])
+def exploreBoards(request):
+    """
+    """
+    boards = Board.objects.filter().all()
+    boards2 = Board.objects.filter().order_by('-pk')
+    data={}
+    data['popular'] = BoardSerializer(boards,many=True).data
+    data['new'] = BoardSerializer(boards2,many=True).data
+    return JsonResponse(data,safe=False)

@@ -28,6 +28,7 @@ urlpatterns = [
     path('api/save/post/<str:slug>/', savePost,name="savePost"),
     path('api/joinBoard/<str:slug>/', joinBoard,name="joinBoard"),
     path('api/subscribedBoards/', getSubscribedBoards,name="getSubscribedBoards"),
+    path('api/exploreBoards/', exploreBoards,name="exploreBoards"),
     path('api/<str:username>/posts/',userPosts,name="userPosts"),
     path('api/vote/poll/<str:slug>/', votePoll,name="votePoll"),
     
