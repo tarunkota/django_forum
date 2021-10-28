@@ -173,3 +173,13 @@ def votePoll(request,slug):
     pr.save()
     return JsonResponse({"msg":"success"})
 
+
+
+@api_view(['GET'])
+def postsUpdate(request):
+	for post in Post.objects.all():
+		post.save()
+	return JsonResponse({"msg":"success"})
+
+
+

@@ -10,10 +10,10 @@ from django.core.cache import cache
 
 def loadPostsInCache(slug):
 	if(slug==""):
-		feed = Post.objects.filter(active=True).order_by('-score')[0:10]
+		feed = Post.objects.filter(active=True).order_by('-score')
 	else:
 		board = Board.objects.get(slug=slug)
-		feed = Post.objects.filter(board=board).filter(active=True).order_by('-score')[0:10]
+		feed = Post.objects.filter(board=board).filter(active=True).order_by('-score')
 	data = PostSerializer(feed,many=True).data	
 	cache.set('feed_'+slug,data,None)
 
@@ -45,8 +45,4 @@ def feedReload(request):
 	return JsonResponse({"msg":"success"})
 
 
-@api_view(['GET'])
-def explore(request):
-	"""
-	"""
-	
+

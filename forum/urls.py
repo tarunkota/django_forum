@@ -3,6 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from .views import *
 
 
+
 urlpatterns = [
     path('api/myprofile/saveAvatar/', saveAvatar,name="saveAvatar"),
     path('api/myprofile/', getMyProfile,name="getMyProfile"),
@@ -18,6 +19,12 @@ urlpatterns = [
 
     path('api/feed',feed,name="feed"),
     path('api/reloadfeed',feedReload,name="feedReload"),
+    path('api/reloadposts',postsUpdate,name="postsUpdate"),
+    
+
+    path('api/notifications/get',getNotifications,name="getNotifications"),
+    path('api/notifications/read/<str:id>/',readNotification,name="readNotification"),
+
     path('api/comments/<str:slug>/',postComments,name="comments"),
     path('api/upvote/comment/<str:uid>/', upvoteComment,name="upvoteComment"),
     path('api/upvote/post/<str:slug>/', upvotePost,name="upvotePost"),

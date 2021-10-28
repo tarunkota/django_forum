@@ -39,3 +39,4 @@ class avatarAdmin(admin.ModelAdmin):
 admin.site.register(Avatar,avatarAdmin)
 
 admin.site.register(SavedPost)
+admin.site.register(Notification)

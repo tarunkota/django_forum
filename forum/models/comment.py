@@ -44,6 +44,10 @@ class Comment(models.Model):
             #update parent comment
             if(self.reply!=None):
                 self.reply.save()
+            #update post
+            if(self.post!=None):
+                if(not self.post.efficientMode):
+                    self.post.save()
 
     def __str__(self):
         return self.text
